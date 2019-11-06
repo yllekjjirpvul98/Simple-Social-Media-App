@@ -1,10 +1,10 @@
 import React from 'react';
-import WrappedNormalLoginForm from './NormalLoginForm';
+import SignInPage from './SignInPage';
 import './App.css'
 
 function App() {
   return (
-    <WrappedNormalLoginForm/>
+    <SignInPage/>
   );
 }
 
