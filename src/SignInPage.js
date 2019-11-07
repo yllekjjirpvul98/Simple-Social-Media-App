@@ -105,6 +105,7 @@ class SignInPage extends React.Component {
     }
 
     async getUserFromDb() {
+        this.state.updateUser = true;
         const url = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDB?id=" + this.state.user.id;
         const options = {
             method: 'GET',
