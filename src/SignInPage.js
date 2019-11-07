@@ -16,7 +16,7 @@ class SignInPage extends React.Component {
             auth: {
                 clientId: config.appId,
                 authority: "https://login.microsoftonline.com/4a5378f9-29f4-4d3e-be89-669d03ada9d8",
-                redirectURI: "http://localhost:3000"
+                redirectURI: "https://cmy1g17-cad-cw1.azurewebsites.net/"
             },
             cache: {
                 cacheLocation: "localStorage",
