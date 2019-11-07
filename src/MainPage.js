@@ -18,7 +18,7 @@ class MainPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { statusData: [], users: [], following: [], followerList: [], followingData: [], followerData: [], updatedPost:false, updatedStatus:false }
+    this.state = { statusData: [], users: [], following: [], followerList: [], followingData: [], followerData: [], updatedPost:false, updatedEdit:false }
   }
 
   async componentDidMount() {
@@ -28,7 +28,9 @@ class MainPage extends React.Component {
   async componentDidUpdate(prevProps, prevStates) {
       if (this.state.updatedPost || this.state.updatedEdit) {
         await this.statusUpdate();
-        if (prevStates.statusData !== this.state.statusData) {
+        if (prevStates.statusData != this.state.statusData) {
+          console.log(prevStates.statusData);
+          console.log(this.state.statusData);
           this.setState({updatedEdit : false, updatedPost : false})
         }
       }
@@ -63,10 +65,10 @@ async fetchFollowingList() {
     const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getFollowing?id=" + this.props.location.state.user.id;
     await fetch(uri)
     .then(response => response.json())
-    .then(data => {
+    .then(async data => {
         this.setState({ following: data })
-        this.statusUpdate();
-        this.fetchFollowingUserData();
+        await this.statusUpdate();
+        await this.fetchFollowingUserData();
     });
   }
 
@@ -122,6 +124,7 @@ async fetchFollowerUserData() {
 
   async statusUpdate() {
     // finding data for status list
+    this.state.updatedEdit = true;
     var followingList = this.state.following;
     followingList = [...followingList];
     if (!followingList.includes(this.props.location.state.user.id)){

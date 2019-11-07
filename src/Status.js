@@ -40,10 +40,10 @@ class Status extends React.Component {
         });
         await fetch(uri, options)
         .then(response => response.json())
-        .then(this.setState({
+        .then(data => this.setState({
             visible: false,
           }))
-        .then(this.props.handler())
+        .then(data => this.props.handler())
         .catch(err => console.log(err))
     };
 
@@ -58,7 +58,7 @@ class Status extends React.Component {
         const options = {method : 'GET'}
         await fetch(uri, options)
         .then(response => response.json())
-        .then(this.props.handler())
+        .then(message => this.props.handler())
         .catch(err => console.log(err))
     }
 

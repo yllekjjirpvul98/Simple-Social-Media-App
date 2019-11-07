@@ -15,7 +15,7 @@ class StatusTextBox extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
           if (!err) {
             // call api to post status
             const url = "https://cad-cw-cmy1g17.azurewebsites.net/api/postStatus";
@@ -23,10 +23,10 @@ class StatusTextBox extends React.Component {
             values['id'] = this.props.user.id;
             values['username'] = this.props.user.username;
             options.body = JSON.stringify(values);
-            fetch (url, options)
+            await fetch (url, options)
             .then(response => response.json())
-            .then(this.props.form.resetFields())
-            .then(this.props.handler(true))
+            .then(data => this.props.form.resetFields())
+            .then(data => this.props.handler(true))
             .catch(err => console.log(err))
           }
         });

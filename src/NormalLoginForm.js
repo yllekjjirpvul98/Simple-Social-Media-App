@@ -20,7 +20,7 @@ class NormalLoginForm extends React.Component {
         const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/registerUser"
         await fetch (uri, options)
         .then(response => console.log(response.json()))
-        .then(this.props.handleRegister())
+        .then(data => this.props.handleRegister())
         .catch(err => console.log(err))
       }
     });

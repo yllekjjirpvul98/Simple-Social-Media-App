@@ -10,12 +10,6 @@ class StatusPage extends React.Component {
     constructor(props){
         super(props);
     }
-
-    
-
-    // componentDidMount(){
-    //     this.props.fetchFollowingList();
-    // }
     
     display(){
         return (
