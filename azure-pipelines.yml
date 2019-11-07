@@ -23,3 +23,10 @@ steps:
   inputs:
     artifactName: build
     pathtoPublish: 'build'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'cmy1g17-cad-cw1 - Azure'
+    appType: 'webApp'
+    WebAppName: 'cmy1g17-cad-cw1'
+    packageForLinux: 'build'
