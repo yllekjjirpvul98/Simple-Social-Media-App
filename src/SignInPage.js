@@ -65,7 +65,6 @@ class SignInPage extends React.Component {
             if (accessToken) {
                 // get user profile
                 var user = await this.getUserDetails(accessToken);
-                console.log(user);
                 this.setState({
                     isAuthenticated: true,
                     user: user,
@@ -73,7 +72,7 @@ class SignInPage extends React.Component {
                     authResponse: accessToken.accessToken,
                     updateUser: true
                 });
-                this.getUserFromDb();
+                await this.getUserFromDb();
             }
         } catch (error) {
             this.setState({
@@ -105,13 +104,13 @@ class SignInPage extends React.Component {
         }
     }
 
-    getUserFromDb() {
+    async getUserFromDb() {
         const url = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDB?id=" + this.state.user.id;
         const options = {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + this.state.authResponse }
         }
-        fetch(url, options)
+        await fetch(url, options)
             .then(response => response.json())
             .then(user =>
                 this.setState({ db_user: user })
@@ -119,14 +118,12 @@ class SignInPage extends React.Component {
     }
 
     handleRegister() {
-        console.log("register handle");
         this.setState({ updateUser: true });
     }
 
-    componentDidUpdate(prevProps, prevStates) {
+    async componentDidUpdate(prevProps, prevStates) {
         if (this.state.updateUser) {
-            this.getUserFromDb();
-            console.log(this.state.db_user);
+            await this.getUserFromDb();
             if (prevStates.db_user !== this.state.db_user) {
                 this.setState({ updateUser: false });
             }

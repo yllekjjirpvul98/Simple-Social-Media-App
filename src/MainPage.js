@@ -21,13 +21,13 @@ class MainPage extends React.Component {
     this.state = { statusData: [], users: [], following: [], followerList: [], followingData: [], followerData: [], updatedPost:false, updatedStatus:false }
   }
 
-  componentDidMount() {
-    this.fetchFollowingList();
+  async componentDidMount() {
+    await this.fetchFollowingList();
   }
 
-  componentDidUpdate(prevProps, prevStates) {
+  async componentDidUpdate(prevProps, prevStates) {
       if (this.state.updatedPost || this.state.updatedEdit) {
-        this.statusUpdate();
+        await this.statusUpdate();
         if (prevStates.statusData !== this.state.statusData) {
           this.setState({updatedEdit : false, updatedPost : false})
         }
@@ -43,11 +43,11 @@ handlerEdit(value) {
     this.setState({updatedEdit : true});
 }
 
-  fetchUsers() {
+  async fetchUsers() {
     // fetch all users from database
     const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getAllUsers";
     const id = this.props.location.state.user.id;
-    fetch(uri)
+    await fetch(uri)
       .then(response => response.json())
       .then(data => {
         return data.filter(function (value, index, arr) {
@@ -57,27 +57,23 @@ handlerEdit(value) {
       .then(data => this.setState({ users: data }))
   }
 
-  fetchFollowingList() {
+async fetchFollowingList() {
     // fetch list of following
-    console.log("fetch following list");
     const id = this.props.location.state.user.id;
     const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getFollowing?id=" + this.props.location.state.user.id;
-    return (fetch(uri)
+    await fetch(uri)
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         this.setState({ following: data })
         this.statusUpdate();
         this.fetchFollowingUserData();
-    })
-    );
+    });
   }
 
-  fetchFollowingUserData() {
+async fetchFollowingUserData() {
     const list = this.state.following;
-    Promise.all(list.map(user => {
+    await Promise.all(list.map(user => {
       const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDb?id=" + user;
-      console.log(uri);
       return fetch(uri, { cache: "no-cache" }).then(response => response.json())
     }))
       .then(data => {
@@ -87,58 +83,51 @@ handlerEdit(value) {
             result = result.concat(data[i]);
           }
         }
-        console.log(result);
         return result;
       }).then(result => this.setState({ followingData: result }))
       .catch(err => console.log(err))
   }
 
-  fetchFollowerUserData() {
-    console.log("fetch follower data");
+async fetchFollowerUserData() {
     const followerList = this.state.followerList;
-    console.log(followerList);
-    Promise.all(followerList.map(user => {
+    await Promise.all(followerList.map(user => {
       const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDb?id=" + user;
-      console.log(uri);
       return fetch(uri, { cache: "no-cache" }).then(response => response.json())
     }))
       .then(data => {
-        console.log(data);
         let result = []
         for (var i = 0; i < data.length; i++) {
           if (data.length > 0) {
             result = result.concat(data[i]);
           }
         }
-        console.log(result);
         return result;
       }).then(result => this.setState({ followerData: result }))
       .catch(err => console.log(err))
   }
 
-  fetchFollowerList() {
+  async fetchFollowerList() {
     // fetch list of followers
     const id = this.props.location.state.user.id;
     const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getFollowers?id=" + this.props.location.state.user.id;
-    fetch(uri)
+    await fetch(uri)
     .then(response => response.json())
-    .then(data => {
+    .then(async data => {
       this.setState({ followerList: data });
-      this.fetchFollowerUserData();
+      await this.fetchFollowerUserData();
       }
     );
   }
 
 
-  statusUpdate() {
-    console.log("status update");
+  async statusUpdate() {
     // finding data for status list
     var followingList = this.state.following;
     followingList = [...followingList];
     if (!followingList.includes(this.props.location.state.user.id)){
       followingList.push(this.props.location.state.user.id);
     }
-    Promise.all(followingList.map(user => {
+    await Promise.all(followingList.map(user => {
       const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getStatus/" + user;
       return fetch(uri, { cache: "no-cache" }).then(response => response.json())
     }))
@@ -152,7 +141,6 @@ handlerEdit(value) {
         result = result.sort(function (a, b) {
           return Date.parse(a.datetime) < Date.parse(b.datetime) ? 1 : -1
         });
-        console.log(result);
         return result;
       }).then(result => this.setState({ statusData: result }))
       .catch(err => console.log(err));

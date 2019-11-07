@@ -14,7 +14,7 @@ class StatusList extends React.Component {
         return (
                 <List dataSource ={this.props.data} style={{textAlign : "center"}}
                 renderItem = {item => (
-                    <List.Item key={item.id}>
+                    <List.Item>
                         <Status item={item} user={this.props.user} handler={this.props.handler}/>
                     </List.Item>
                 )}>

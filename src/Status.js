@@ -8,12 +8,13 @@ class Status extends React.Component {
     
     constructor (props){
         super(props);
-        this.state = {visible : false, new_content: this.props.item.content};
+        this.state = {visible : false, new_content:''};
     }
 
     showModal = () => {
         this.setState({
           visible: true,
+          new_content : this.props.item.content
         });
     };
 
@@ -30,14 +31,14 @@ class Status extends React.Component {
     };
 
     // update edited status via Azure Functions
-    handleOk = e => {
+    handleOk = async e => {
         const new_content = this.state.new_content;
         const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/editStatus?id=" + this.props.item.id;
         const options = {method : 'POST'}
         options.body = JSON.stringify({
             content : new_content
         });
-        fetch(uri, options)
+        await fetch(uri, options)
         .then(response => response.json())
         .then(this.setState({
             visible: false,
@@ -52,10 +53,10 @@ class Status extends React.Component {
         return this.props.user.username === this.props.item.username;
     }
 
-    handleDelete (){
+    async handleDelete (){
         const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/deleteStatus?id="+this.props.item.id;
         const options = {method : 'GET'}
-        fetch(uri, options)
+        await fetch(uri, options)
         .then(response => response.json())
         .then(this.props.handler())
         .catch(err => console.log(err))
@@ -82,7 +83,7 @@ class Status extends React.Component {
                     onOk={this.handleOk.bind(this)}
                     onCancel={this.handleCancel}
                 >
-                    <Input.TextArea id="textare" onChange={this.handleChange.bind(this)} rows='5' cols='35' style={{'resize':'none', 'fontSize' : '18px'}} value={this.state.new_content} placeholder="What do you want to post today?"/>
+                    <Input.TextArea id="textarea" onChange={this.handleChange.bind(this)} rows='5' cols='35' style={{'resize':'none', 'fontSize' : '18px'}} value={this.state.new_content} placeholder="What do you want to post today?"/>
                 </Modal>
                 </Container>
             );

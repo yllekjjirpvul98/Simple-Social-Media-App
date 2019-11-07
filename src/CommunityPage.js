@@ -13,19 +13,19 @@ class CommunityPage extends React.Component {
         this.state = {updateFollow : false};
     }
 
-    componentDidMount(){
-        this.props.fetchUsers();
-        this.props.fetchFollowingList();
+    async componentDidMount(){
+        await this.props.fetchUsers();
+        await this.props.fetchFollowingList();
     }
 
     handler(){
         this.setState({updateFollow : true});
     }
 
-    componentDidUpdate(prevProps, prevState){
+    async componentDidUpdate(prevProps, prevState){
         if (this.state.updateFollow) {
             const size = prevProps.following.length;
-            this.props.fetchFollowingList();
+            await this.props.fetchFollowingList();
             if (size !== this.props.following.length) {
                 // data fetch is consistent to write
                 this.setState({updateFollow:false});

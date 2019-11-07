@@ -7,9 +7,9 @@ class NormalLoginForm extends React.Component {
     super(props);
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // register user with form values
         const id = this.props.user.id;
@@ -17,9 +17,8 @@ class NormalLoginForm extends React.Component {
         // post value to database by calling api
         const options = {method: 'POST', headers: {Authorization : 'Bearer ' + this.props.accessToken}}
         options.body = JSON.stringify(values)
-        console.log(values);
         const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/registerUser"
-        fetch (uri, options)
+        await fetch (uri, options)
         .then(response => console.log(response.json()))
         .then(this.props.handleRegister())
         .catch(err => console.log(err))

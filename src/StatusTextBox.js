@@ -22,7 +22,6 @@ class StatusTextBox extends React.Component {
             const options = {method: 'POST', headers: {Authorization : 'Bearer ' + this.props.accessToken}}
             values['id'] = this.props.user.id;
             values['username'] = this.props.user.username;
-            console.log("POST" + JSON.stringify(values));
             options.body = JSON.stringify(values);
             fetch (url, options)
             .then(response => response.json())

@@ -9,19 +9,19 @@ class UserCard extends React.Component {
 
 
 
-    handleUnfollow = e => {
+    handleUnfollow = async e => {
         // talk to azure functions to unfollow a user
         const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/unfollowUser?from=" + this.props.user.id + "&to=" + this.props.profile.id;
-        fetch(uri)
+        await fetch(uri)
         .then(response => response.json())
         .then(this.props.handler())
         .catch(err => console.log(err))
     }
 
-    handleFollow = e => {
+    handleFollow = async e => {
         // talk to azure functions to follow a user
         const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/followUser?from=" + this.props.user.id + "&to=" + this.props.profile.id;
-        fetch(uri)
+        await fetch(uri)
         .then(response => response.json())
         .then(this.props.handler())
         .catch(err => console.log(err));
