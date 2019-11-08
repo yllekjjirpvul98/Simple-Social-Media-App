@@ -92,7 +92,7 @@ async fetchFollowingUserData() {
   }
 
 async fetchFollowerUserData() {
-  this.state.updateFollowList = true;
+  this.state.updateFollowList = false;
     const followerList = this.state.followerList;
     await Promise.all(followerList.map(user => {
       const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDb?id=" + user;

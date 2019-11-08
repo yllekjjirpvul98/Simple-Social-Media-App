@@ -46,7 +46,7 @@ class Profile extends React.Component {
         }
         return (
             this.props.updateFollowingList?
-            <Spin></Spin>
+            <Container style={{textAlign: 'center'}}><Spin></Spin></Container>
             :
             <Container style={{textAlign:'center'}}>
                 <h2>List of Following</h2>
@@ -85,7 +85,7 @@ class Profile extends React.Component {
         }
         return (
             this.props.updateFollowList?
-            <Spin></Spin>
+            <Container style={{textAlign: 'center'}}><Spin></Spin></Container>
             :
             <Container style={{textAlign:'center'}}>
                 <h2>List of Follower</h2>
