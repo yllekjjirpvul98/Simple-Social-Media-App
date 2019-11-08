@@ -18,7 +18,7 @@ class MainPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { statusData: [], users: [], following: [], followerList: [], followingData: [], followerData: [], updatedPost:false, updatedEdit:false }
+    this.state = { statusData: [], users: [], following: [], followerList: [], followingData: [], followerData: [], updatedPost:false, updatedEdit:false, updateFollowList:false, updateFollowingList:false }
   }
 
   async componentDidMount() {
@@ -73,6 +73,7 @@ async fetchFollowingList() {
   }
 
 async fetchFollowingUserData() {
+    this.state.updateFollowingList = true;
     const list = this.state.following;
     await Promise.all(list.map(user => {
       const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDb?id=" + user;
@@ -86,11 +87,12 @@ async fetchFollowingUserData() {
           }
         }
         return result;
-      }).then(result => this.setState({ followingData: result }))
+      }).then(result => this.setState({ followingData: result, updateFollowingList : false }))
       .catch(err => console.log(err))
   }
 
 async fetchFollowerUserData() {
+  this.state.updateFollowList = true;
     const followerList = this.state.followerList;
     await Promise.all(followerList.map(user => {
       const uri = "https://cad-cw-cmy1g17.azurewebsites.net/api/getUserFromDb?id=" + user;
@@ -104,7 +106,7 @@ async fetchFollowerUserData() {
           }
         }
         return result;
-      }).then(result => this.setState({ followerData: result }))
+      }).then(result => this.setState({ followerData: result, updateFollowList:false }))
       .catch(err => console.log(err))
   }
 
@@ -178,7 +180,7 @@ async fetchFollowerUserData() {
             icon={<Icon type="smile" theme="twoTone" />}
             title="Welcome to the Social Media App!"
           /></Route>
-          <Route path="/profile"><Profile user={this.props.location.state.user} followingList={this.state.following} followingData = {this.state.followingData} followerData = {this.state.followerData} fetchFollowingList={this.fetchFollowingList.bind(this)} followerList={this.state.followerList} fetchFollowerList={this.fetchFollowerList.bind(this)} /> </Route>
+          <Route path="/profile"><Profile user={this.props.location.state.user} followingList={this.state.following} followingData = {this.state.followingData} followerData = {this.state.followerData} fetchFollowingList={this.fetchFollowingList.bind(this)} followerList={this.state.followerList} fetchFollowerList={this.fetchFollowerList.bind(this)} updateFollowList={this.state.updateFollowList} updateFollowingList={this.state.updateFollowingList}/> </Route>
           <Route path="/statusList"><StatusPage updatedPost={this.state.updatedPost} updatedEdit={this.state.updatedEdit} handlerPost={this.handlerPost.bind(this)} handlerEdit={this.handlerEdit.bind(this)} status={this.state.statusData} user={this.props.location.state.user} statusUpdate={this.statusUpdate.bind(this)} followinglist={this.state.following} fetchFollowingList={this.fetchFollowingList.bind(this)} /></Route>
           <Route path="/community"><CommunityPage user={this.props.location.state.user} users={this.state.users} following={this.state.following} fetchUsers={this.fetchUsers.bind(this)} fetchFollowingList={this.fetchFollowingList.bind(this)} /></Route>
         </Switch>

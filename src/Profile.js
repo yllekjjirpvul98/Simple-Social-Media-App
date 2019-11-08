@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Table } from 'antd';
+import { Row, Col, Card, Table, Spin } from 'antd';
 import { Container } from '@material-ui/core';
 import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom';
 
@@ -11,9 +11,9 @@ class Profile extends React.Component {
         this.follower.bind(this);
     }
 
-    componentDidMount(){
-        this.props.fetchFollowingList();
-        this.props.fetchFollowerList();
+    async componentDidMount(){
+        await this.props.fetchFollowingList();
+        await this.props.fetchFollowerList();
     }
 
     following() {
@@ -45,6 +45,9 @@ class Profile extends React.Component {
             })
         }
         return (
+            this.props.updateFollowingList?
+            <Spin></Spin>
+            :
             <Container style={{textAlign:'center'}}>
                 <h2>List of Following</h2>
                 <Table columns={columns} dataSource={data}/>
@@ -81,6 +84,9 @@ class Profile extends React.Component {
             })
         }
         return (
+            this.props.updateFollowList?
+            <Spin></Spin>
+            :
             <Container style={{textAlign:'center'}}>
                 <h2>List of Follower</h2>
                 <Table columns={columns} dataSource={data}/>
