@@ -9,6 +9,7 @@
 ## Technlogy Stack
 - Frontend: React.js & Ant Design (UI Component)
 - Backend: Azure Functions
+- Database: Azure CosmosDB
 - Testing: Postman 
 
 ## Screenshot
