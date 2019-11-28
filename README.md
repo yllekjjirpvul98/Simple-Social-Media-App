@@ -19,3 +19,8 @@ Log in with Azure Directory | Profile
 ![Welcome](Image/Pop-up-window.PNG)  |  ![SignIn](Image/profile.PNG)
 Status | Community
 ![Status](Image/Status.PNG)  |  ![Community](Image/Community.PNG)
+
+## Link to Resources
+Resource | Website
+--------|---------
+Link to website | https://cmy1g17-cad-cw1.azurewebsites.net
