@@ -12,4 +12,10 @@
 - Testing: Postman 
 
 ## Screenshot
-<img src="https://raw.githubusercontent.com/yllekjjirpvul98/cad-cw-1-front-end/master/Image/Welcome.PNG?sanitize=true&raw=true"/>
+Welcome     |     Sign In
+:-------------------------:|:-------------------------:
+![Welcome](Image/Welcome.PNG)  |  ![SignIn](Image/SignIn.PNG)
+Log in with Azure Directory | Profile
+![Welcome](Image/Pop-up-window.PNG)  |  ![SignIn](Image/profile.PNG)
+Status | Community
+![Status](Image/Status.PNG)  |  ![Community](Image/Community.PNG)
