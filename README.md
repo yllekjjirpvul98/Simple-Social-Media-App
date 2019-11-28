@@ -12,3 +12,4 @@
 - Testing: Postman 
 
 ## Screenshot
+<img src="https://raw.githubusercontent.com/yllekjjirpvul98/cad-cw1-front-end/master/Image/Welcome.PNG?sanitize=true&raw=true"/>
